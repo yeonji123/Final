@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import  CheckLocation  from './components/checkLocation';
 import React, { useEffect, useState } from "react";
 import { Button } from 'react-native';
+import  CheckLocation  from './components/checkLocation';
+import GoogleMap from './components/GoogleMap';
+import AppleMap from './components/AppleMap';
 
 export default function App() {
   const [click, setClick] = useState();
@@ -12,11 +14,11 @@ export default function App() {
       <Button
         title="button"
         onPress={() => { setClick(true) }} />
+      
       {
-        click ? <CheckLocation /> : null
+        click ? <GoogleMap/> : null
       }
-
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
     </View>
   );
 }

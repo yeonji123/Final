@@ -5,6 +5,8 @@ import { Button } from 'react-native';
 import  CheckLocation  from './components/checkLocation';
 import GoogleMap from './components/GoogleMap';
 import AppleMap from './components/AppleMap';
+import KakaoLogin from './login/KakaoLogin';
+
 
 export default function App() {
   const [click, setClick] = useState();
@@ -15,9 +17,7 @@ export default function App() {
         title="button"
         onPress={() => { setClick(true) }} />
       
-      {
-        click ? <GoogleMap/> : null
-      }
+      <KakaoLogin/>
       <StatusBar style="dark" />
     </View>
   );

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Text, View, SafeAreaView, TextInput, TouchableOpacity, StyleSheet, Button, Alert } from 'react-native';
+import { Text, View, StyleSheet} from 'react-native';
 import Constants from 'expo-constants';
 
 
@@ -26,6 +26,7 @@ export default function MyPage(navigation) {
     React.useEffect(() => {
 
         // 서버에 요청
+        /*
         axios.post("http://192.168.2.94:5000/member/mypage", null, {
             params : {
                 id: "user3" //sessionStorage에 있는 id값
@@ -45,7 +46,7 @@ export default function MyPage(navigation) {
         })
         .catch(function (error){
             console.log(error)
-        })
+        })*/
 
 
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, Button, Alert } from 'react-native';
+import { Text, View, StyleSheet} from 'react-native';
 import Constants from 'expo-constants';
 
 
@@ -9,23 +9,22 @@ import Constants from 'expo-constants';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { subscribeToPermissionUpdates } from 'react-native-location';
+const Stack = createStackNavigator();
 
 //동물 info가져오기
 export default function AnimalDetail(navigation) {
 
-    const [press, setPress] = React.useState();
+    const [press, setPress] = React.useState("");
 
 
-    const [aName, setAnimalName] = React.useState();
-    const [aSex, setAnimalSex] = React.useState();
-    const [aBirth, setAnimalBirth] = React.useState(); //생일
-    const [aBreed, setAnimalBreed] = React.useState(); //종류
-    const [aNeat, setAnimalNeat] = React.useState(); //중성화 여부
+    const [aName, setAnimalName] = React.useState("");
+    const [aSex, setAnimalSex] = React.useState("");
+    const [aBirth, setAnimalBirth] = React.useState(""); //생일
+    const [aBreed, setAnimalBreed] = React.useState(""); //종류
+    const [aNeat, setAnimalNeat] = React.useState(""); //중성화 여부
 
 
     React.useEffect(() => {
-
         //선택한 동물의 정보 가져오려면 props사용해야함
 
 

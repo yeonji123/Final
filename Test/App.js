@@ -7,10 +7,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import KakaoLogin from './login/KakaoLogin';
 import Join from './login/Join';
+import GoogleMap from './components/GoogleMap';
+
 
 function HomeScreen() {
   return (
-    <View >
+    <View  >
       <Text>Home!</Text>
       <Join/>
     </View>
@@ -20,6 +22,7 @@ function HomeScreen() {
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {/* <GoogleMap/> */}
       <KakaoLogin/>
     </View>
   );

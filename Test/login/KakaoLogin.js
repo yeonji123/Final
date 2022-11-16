@@ -13,7 +13,7 @@ const KakaoLogin = () => {
     const [userdata, setuserData] = useState();
     
     const id = "74dcd7c8555b0f1c9d94f04c363cdbed";
-    const redirect ="http://192.168.2.77:5000";
+    const redirect ="http://192.168.2.77:5000/oauth/callback/kakao";
 
     function LogInProgress(data) {
         console.log("loginProgress");
@@ -73,7 +73,7 @@ const KakaoLogin = () => {
                 javaScriptEnabled={true}
                 onMessage={(event) => { 
                     console.log(event.nativeEvent);
-                    LogInProgress(event.nativeEvent.url);}}
+                    LogInProgress(event.nativeEvent['url'])}}
             // onMessage ... :: webview에서 온 데이터를 event handler로 잡아서 logInProgress로 전달
             />
         </View>

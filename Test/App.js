@@ -1,46 +1,61 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 import React, { useEffect, useState } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import KakaoLogin from './login/KakaoLogin';
+
 import Join from './login/Join';
-import GoogleMap from './components/GoogleMap';
+import MyPage from './MyPage/MyPage';
 
 
-function HomeScreen() {
+
+const Stack = createStackNavigator();
+
+function Home({ navigation }) {
   return (
-    <View  >
-      <Text>Home!</Text>
-      <Join/>
-    </View>
-  );
+
+    <ScrollView>
+      <Text>Join</Text>
+      <Button title="회원가입 페이지로 이동"
+        onPress={() => {
+          navigation.navigate('Join')
+        }}
+      />
+      <Text>Mypage</Text>
+      <Button title="마이페이지로 이동"
+        onPress={() => {
+          navigation.navigate('MyPage');
+        }}
+      />
+    </ScrollView>
+  )
+
 }
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {/* <GoogleMap/> */}
-      <KakaoLogin/>
-    </View>
-  );
-}
 
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
+
 
 export default function App() {
-
-  const Stack = createStackNavigator();
-  
-
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="카카오톡" component={HomeScreen}/>
-        <Tab.Screen name="추가 정보" component={SettingsScreen}/>
-      </Tab.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Join" component={Join} />
+        <Stack.Screen name="Kakao" component={KakaoLogin} />
+        {/* <Stack.Screen name="Map" component={GoogleMap} /> */}
+        <Stack.Screen name="MyPage" component={MyPage} />
+      </Stack.Navigator>
+
+
+      {/* <Tab.Navigator>
+        <Tab.Screen name="카카오톡" component={HomeScreen} />
+        <Tab.Screen name="추가 정보" component={SettingsScreen} />
+        <Tab.Screen name="마이페이지" component={MyPageScreen} />
+      </Tab.Navigator> */}
     </NavigationContainer>
   );
 }

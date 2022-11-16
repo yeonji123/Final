@@ -9,7 +9,7 @@ import KakaoLogin from './login/KakaoLogin';
 
 import Join from './login/Join';
 import MyPage from './MyPage/MyPage';
-
+import AnimalDetail from './MyPage/AnimalDetail';
 
 
 const Stack = createStackNavigator();
@@ -30,6 +30,12 @@ function Home({ navigation }) {
           navigation.navigate('MyPage');
         }}
       />
+      <Text>AnimalDetail</Text>
+      <Button title="애완동물 정보 페이지로 이동"
+        onPress={() => {
+          navigation.navigate('AnimalDetail');
+        }}
+      />
     </ScrollView>
   )
 
@@ -48,6 +54,7 @@ export default function App() {
         <Stack.Screen name="Kakao" component={KakaoLogin} />
         {/* <Stack.Screen name="Map" component={GoogleMap} /> */}
         <Stack.Screen name="MyPage" component={MyPage} />
+        <Stack.Screen name="AnimalDetail" component={AnimalDetail} />
       </Stack.Navigator>
 
 

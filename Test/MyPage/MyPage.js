@@ -40,7 +40,7 @@ export default function MyPage(navigation) {
             setNickname(res.data.nickname);
             setPhone(res.data.phone);
             setAddress(res.data.address);
-            // setDetailAddress(res.data.detail_Address);
+            setDetailAddress(res.data.detail_Address);
             //setCheck(res.data.check);
         })
         .catch(function (error){

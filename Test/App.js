@@ -10,6 +10,9 @@ import KakaoLogin from './login/KakaoLogin';
 import Join from './login/Join';
 import MyPage from './MyPage/MyPage';
 import AnimalDetail from './MyPage/AnimalDetail';
+import ModifyAnimal from './MyPage/ModifyAnimal';
+import AnimalList from './MyPage/AnimalList';
+import MypageModify from './MyPage/MyPageModify';
 
 
 const Stack = createStackNavigator();
@@ -30,10 +33,28 @@ function Home({ navigation }) {
           navigation.navigate('MyPage');
         }}
       />
+      <Text>MypageModify</Text>
+      <Button title="마이페이지 수정으로 이동"
+        onPress={() => {
+          navigation.navigate('MypageModify');
+        }}
+      />
       <Text>AnimalDetail</Text>
       <Button title="애완동물 정보 페이지로 이동"
         onPress={() => {
           navigation.navigate('AnimalDetail');
+        }}
+      />
+      <Text>AnimalList</Text>
+      <Button title="애완동물 목록 페이지로 이동"
+        onPress={() => {
+          navigation.navigate('AnimalList');
+        }}
+      />
+      <Text>ModifyAnimal</Text>
+      <Button title="애완동물 정보 수정 페이지로 이동"
+        onPress={() => {
+          navigation.navigate('ModifyAnimal');
         }}
       />
     </ScrollView>
@@ -54,7 +75,10 @@ export default function App() {
         <Stack.Screen name="Kakao" component={KakaoLogin} />
         {/* <Stack.Screen name="Map" component={GoogleMap} /> */}
         <Stack.Screen name="MyPage" component={MyPage} />
+        <Stack.Screen name="MypageModify" component={MypageModify} />
         <Stack.Screen name="AnimalDetail" component={AnimalDetail} />
+        <Stack.Screen name="AnimalList" component={AnimalList} />
+        <Stack.Screen name="ModifyAnimal" component={ModifyAnimal} />
       </Stack.Navigator>
 
 

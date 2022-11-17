@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import Constants from 'expo-constants';
 
 
@@ -55,65 +55,75 @@ export default function MyPage(navigation) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}> 로그인 정보 </Text>
+            <Text style={styles.title}> 회원 정보 </Text>
             <View style={styles.title}>
-                <View style={{ padding: 10,}}>
-                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width:'100%'}}>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{fontSize:20}}>닉네임</Text>
+                            <Text style={{ fontSize: 20 }}>닉네임</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{fontSize:15}}>dfdfdf{nickname}</Text>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{nickname}</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ padding: 10,}}>
-                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width:'100%'}}>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{fontSize:20}}>이메일</Text>
+                            <Text style={{ fontSize: 20 }}>이메일</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{fontSize:15}}>dfdfdf{id}</Text>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{id}</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ padding: 10,}}>
-                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width:'100%'}}>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{fontSize:20}}>이름</Text>
+                            <Text style={{ fontSize: 20 }}>이름</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{fontSize:15}}>dfdfdf{name}</Text>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{name}</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ padding: 10,}}>
-                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width:'100%'}}>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{fontSize:20}}>비밀번호</Text>
+                            <Text style={{ fontSize: 20 }}>비밀번호</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{fontSize:15}}>dfdfdf{pw}</Text>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{pw}</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ padding: 10,}}>
-                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width:'100%'}}>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{fontSize:20}}>전화번호</Text>
+                            <Text style={{ fontSize: 20 }}>전화번호</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{fontSize:15}}>dfdfdf{phone}</Text>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{phone}</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ padding: 10,}}>
-                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width:'100%'}}>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{fontSize:20}}>주소</Text>
+                            <Text style={{ fontSize: 20 }}>주소</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{fontSize:15}}>dfdfdf{address}</Text>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{address}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
+                        <View style={styles.infoName}>
+                            <Text style={{ fontSize: 20 }}>상세주소</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{detailaddress}</Text>
                         </View>
                     </View>
                 </View>
@@ -121,6 +131,10 @@ export default function MyPage(navigation) {
                 {
                     check ? <Button title="cTrue">dfdf</Button> : <Button title="cFalse">dfdf</Button>
                 }*/}
+
+                <View>
+                    <Button title="수정" onPress={() => Alert.alert('MypageModify 페이지로 변환')} />
+                </View>
             </View>
         </View>
     )
@@ -143,16 +157,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 30,
         fontWeight: 'bold',
-        
     },
     infoName: {
+        backgroundColor :"red",
         padding: 10,
-        alignItems : 'center',
-        width:130,
+        alignItems: 'center',
+        width: 130,
     },
-    info:{
+    info: {
+        backgroundColor :"blue",
         padding: 10,
-        width:184,
-        alignItems : 'center',    
-    }
+        width: 184,
+        alignItems: 'center',
+    },
+
 });

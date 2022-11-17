@@ -9,6 +9,8 @@ import Checkbox from 'expo-checkbox';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { TextInput } from 'react-native-gesture-handler';
+
 const Stack = createStackNavigator();
 
 //동물 info가져오기
@@ -22,6 +24,7 @@ export default function AnimalDetail(navigation) {
 
     React.useEffect(() => {
         //선택한 동물의 정보 가져오려면 props사용해야함
+        //아직 미완
 
 
         // 서버에 요청
@@ -50,7 +53,7 @@ export default function AnimalDetail(navigation) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}> 애완동물 정보 </Text>
+            <Text style={styles.title}> 애완동물 정보 수정</Text>
             <View style={styles.title}>
                 <View style={{ padding: 10, }}>
                     <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
@@ -58,7 +61,14 @@ export default function AnimalDetail(navigation) {
                             <Text style={{ fontSize: 20 }}>애완동물 이름</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aName}</Text>
+                            {/* <Text style={{ fontSize: 15 }}>dfdfdf{aName}</Text> 
+                                placeholder수정해줘야 함
+                            */}
+                            <TextInput
+                                    style={styles.input}
+                                    onChangeText={setAnimalName}
+                                    placeholder="useless placeholder"
+                                />
                         </View>
                     </View>
                 </View>
@@ -68,7 +78,14 @@ export default function AnimalDetail(navigation) {
                             <Text style={{ fontSize: 20 }}>성별</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aSex}</Text>
+                            {/* <Text style={{ fontSize: 15 }}>dfdfdf{aName}</Text> 
+                                placeholder수정해줘야 함
+                            */}
+                            <TextInput
+                                    style={styles.input}
+                                    onChangeText={setAnimalSex}
+                                    placeholder="useless placeholder"
+                                />
                         </View>
                     </View>
                 </View>
@@ -78,7 +95,14 @@ export default function AnimalDetail(navigation) {
                             <Text style={{ fontSize: 20 }}>생일</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aBirth}</Text>
+                            {/* <Text style={{ fontSize: 15 }}>dfdfdf{aName}</Text> 
+                                placeholder수정해줘야 함
+                            */}
+                            <TextInput
+                                    style={styles.input}
+                                    onChangeText={setAnimalBirth}
+                                    placeholder="useless placeholder"
+                                />
                         </View>
                     </View>
                 </View>
@@ -88,7 +112,14 @@ export default function AnimalDetail(navigation) {
                             <Text style={{ fontSize: 20 }}>견종</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aBreed}</Text>
+                            {/* <Text style={{ fontSize: 15 }}>dfdfdf{aName}</Text> 
+                                placeholder수정해줘야 함
+                            */}
+                            <TextInput
+                                    style={styles.input}
+                                    onChangeText={setAnimalBreed}
+                                    placeholder="useless placeholder"
+                                />
                         </View>
                     </View>
                 </View>
@@ -97,17 +128,17 @@ export default function AnimalDetail(navigation) {
                         <View style={styles.infoName}>
                             <Text style={{ fontSize: 20 }}>중성화 여부</Text>
                         </View>
-                        {/* 중성화 여부는 체크박스 */}
                         <View style={{ flexDirection: 'row', padding: 10, width: "55%", alignItems: 'center', }}>
                             <View style={styles.section}>
-                                <Checkbox style={styles.checkbox} value={aNeat}/>
+                                <Checkbox style={styles.checkbox} value={aNeat} onValueChange={setAnimalNeat}/>
                                 <Text style={styles.paragraph}>중성화 여부</Text>
                             </View>
                         </View>
                     </View>
                 </View>
+                
                 <View>
-                    <Button title="수정" onPress={() => Alert.alert('ModifyAnimalInfo 페이지로 전환')} />
+                    <Button title="수정" onPress={() => Alert.alert('정보 수정 완료 alert랑 정보 페이지로 전환')} />
                 </View>
             </View>
         </View>

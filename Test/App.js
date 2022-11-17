@@ -13,7 +13,7 @@ import AnimalDetail from './MyPage/AnimalDetail';
 import ModifyAnimal from './MyPage/ModifyAnimal';
 import AnimalList from './MyPage/AnimalList';
 import MypageModify from './MyPage/MyPageModify';
-
+import AddAnimal from './MyPage/AddAnimal';
 
 const Stack = createStackNavigator();
 
@@ -57,6 +57,12 @@ function Home({ navigation }) {
           navigation.navigate('ModifyAnimal');
         }}
       />
+      <Text>AddAnimal</Text>
+      <Button title="애완동물 추가 페이지"
+        onPress={() => {
+          navigation.navigate('AddAnimal');
+        }}
+      />
     </ScrollView>
   )
 
@@ -79,6 +85,7 @@ export default function App() {
         <Stack.Screen name="AnimalDetail" component={AnimalDetail} />
         <Stack.Screen name="AnimalList" component={AnimalList} />
         <Stack.Screen name="ModifyAnimal" component={ModifyAnimal} />
+        <Stack.Screen name="AddAnimal" component={AddAnimal} />
       </Stack.Navigator>
 
 

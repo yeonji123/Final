@@ -20,7 +20,8 @@ export default function MyPage(navigation) {
     const [nickname, setNickname] = React.useState(""); //닉네임
     const [phone, setPhone] = React.useState(""); // 전화번호
     const [address, setAddress] = React.useState(""); // 주소
-    const [detailaddress, setDetailAddress] = React.useState("");
+    const [detailaddress, setDetailAddress] = React.useState("");//상세주소
+    const [location_Num, onChangeLocationNum] = React.useState(""); // 우편번호
     const [check, setCheck] = React.useState(true); //스피너 위치기반 서비스 허용 여부
 
     React.useEffect(() => {
@@ -42,6 +43,7 @@ export default function MyPage(navigation) {
             setPhone(res.data.phone);
             setAddress(res.data.address);
             setDetailAddress(res.data.detail_Address);
+            onChangeLocationNum(res.data.location_Num);
             //setCheck(res.data.check);
         })
         .catch(function (error){
@@ -124,6 +126,16 @@ export default function MyPage(navigation) {
                         </View>
                         <View style={styles.info}>
                             <Text style={{ fontSize: 15 }}>dfdfdf{detailaddress}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
+                        <View style={styles.infoName}>
+                            <Text style={{ fontSize: 20 }}>우편번호</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={{ fontSize: 15 }}>dfdfdf{location_Num}</Text>
                         </View>
                     </View>
                 </View>

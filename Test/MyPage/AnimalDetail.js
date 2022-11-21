@@ -9,44 +9,35 @@ import Checkbox from 'expo-checkbox';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { SYSTEM_BRIGHTNESS } from 'expo-permissions';
 const Stack = createStackNavigator();
 
 //동물 info가져오기
-export default function AnimalDetail(navigation) {
-    const [aName, setAnimalName] = React.useState(""); //애완동물 이름
-    const [aSex, setAnimalSex] = React.useState(""); //성별
-    const [aBirth, setAnimalBirth] = React.useState(""); //생일
-    const [aBreed, setAnimalBreed] = React.useState(""); //종류
-    const [aNeat, setAnimalNeat] = React.useState(false); //중성화 여부
+export default function AnimalDetail({  navigation  , route}) {
+    const [aName, setAnimalName] = React.useState(route.params.info[0]); //애완동물 이름
+    const [aSex, setAnimalSex] = React.useState(route.params.info[1]); //성별
+    const [aBirth, setAnimalBirth] = React.useState(route.params.info[2]); //생일
+    const [aBreed, setAnimalBreed] = React.useState(route.params.info[3]); //종류
+    const [aNeat, setAnimalNeat] = React.useState(route.params.info[4]); //중성화 여부
 
 
     React.useEffect(() => {
+        console.log("animal")
         //선택한 동물의 정보 가져오려면 props사용해야함
-
-
-        // 서버에 요청
-        // 애완동물 정보 불러오기
-        /*
-        axios.post("http://192.168.2.94:5000/member/mypage", null, {
-            params : {
-                id: "user3" //sessionStorage에 있는 id값
-            }
-        })
-        .then(function (res){
-            console.log(res.data);
-
-            setAnimalName(res.data.aName);
-            setAnimalSex(res.data.aSex);
-            setAnimalBirth(res.data.abirth);
-            setAnimalBreed(res.data.abreed);
-            setAnimalNeat(res.data.aNeat);
-        })
-        .catch(function (error){
-            console.log(error)
-        })*/
-
+        console.log(route);
+        load()
     }, []);
-
+    
+    const load = async () => {
+        try {
+            const value = await AsyncStorage.getItem('key');
+            const infoString = await AsyncStorage.getItem('info');
+            const info = JSON.parse(infoString); // 저장된 객체 변환
+            console.log(value);
+        } catch (e) {
+            // 오류 예외 처리
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -55,10 +46,10 @@ export default function AnimalDetail(navigation) {
                 <View style={{ padding: 10, }}>
                     <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{ fontSize: 20 }}>애완동물 이름</Text>
+                            <Text style={{ fontSize: 20 }}>이름</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aName}</Text>
+                            <Text style={{ fontSize: 15 }}>{aName}</Text>
                         </View>
                     </View>
                 </View>
@@ -68,7 +59,7 @@ export default function AnimalDetail(navigation) {
                             <Text style={{ fontSize: 20 }}>성별</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aSex}</Text>
+                            <Text style={{ fontSize: 15 }}>{aSex}</Text>
                         </View>
                     </View>
                 </View>
@@ -78,17 +69,17 @@ export default function AnimalDetail(navigation) {
                             <Text style={{ fontSize: 20 }}>생일</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aBirth}</Text>
+                            <Text style={{ fontSize: 15 }}>{aBirth}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={{ padding: 10, }}>
                     <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
-                            <Text style={{ fontSize: 20 }}>견종</Text>
+                            <Text style={{ fontSize: 20 }}>종류</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={{ fontSize: 15 }}>dfdfdf{aBreed}</Text>
+                            <Text style={{ fontSize: 15 }}>{aBreed}</Text>
                         </View>
                     </View>
                 </View>
@@ -107,7 +98,14 @@ export default function AnimalDetail(navigation) {
                     </View>
                 </View>
                 <View>
-                    <Button title="수정" onPress={() => Alert.alert('ModifyAnimalInfo 페이지로 전환')} />
+                    <Button title="수정" onPress={() => {
+                        console.log(aName)
+                        // HomeScreen()
+                        navigation.navigate("ModifyAnimal",{
+                            info: [ aName, aSex, aBirth, aBreed, aNeat ],
+                            title: "title",
+                        })
+                    }} />
                 </View>
             </View>
         </View>

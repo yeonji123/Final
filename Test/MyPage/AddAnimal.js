@@ -41,7 +41,7 @@ export default function AddAnimal(navigation) {
 
     //애완동물 이름 정규식
     const validateName = aName => {
-        const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-15|]$/;
+        const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-15|]{1,20}$/;
         return regex.test(aName);
     }
     //성별
@@ -57,9 +57,10 @@ export default function AddAnimal(navigation) {
     }
     //종류
     const validateBreed = aBreed => {
-        const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|1-15|]$/;
+        const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|1-15|]{1,20}$/;
         return regex.test(aBreed);
     }
+
     //띄어쓰기 고로시
     const removespace = text => {
         const regex = /\s/g;
@@ -110,21 +111,26 @@ export default function AddAnimal(navigation) {
 
     function insertAnimal() {
         //서버로 전송
-        axios.post("http://192.168.2.94:5000/member/mypage", null, {
+        console.log(typeof(aBirth));
+        console.log(aBirth);
+        /*
+        axios.post("http://192.168.2.94:5000/animal/write", null, {
             params : {
-                aName : aName,
-                aSex : aSex,
-                aBirth : aBirth,
-                aBreed : aBreed,
-                aNeat : aNeat
+                a_name : aName,
+                id:"user",
+                a_birth : aBirth,
+                a_breed : aBreed,
+                a_neat : aNeat,
+                a_sex : aSex,
             }
         })
         .then(function (res){
+            console.log(res);
             console.log(res.data);
         })
         .catch(function (error){
             console.log(error)
-        })
+        })*/
 
     }
 
@@ -152,6 +158,7 @@ export default function AddAnimal(navigation) {
                     style={styles.input}
                     onChangeText={handleBirthChange}
                     value={aBirth}
+                    keyboardType="number-pad"
                     placeholder="생일"
                 />
                 <Text style={styles.text}>{errorMessageBirth}</Text>
@@ -163,7 +170,7 @@ export default function AddAnimal(navigation) {
                     placeholder="견종"
                 />
                 <Text style={styles.text}>{errorMessageBreed}</Text>
-                <Checkbox style={styles.checkbox} value={aNeat} onChange={setAnimalNeat} />
+                <Checkbox style={styles.checkbox} value={aNeat} onValueChange={setAnimalNeat} />
                 <Text style={styles.paragraph}>중성화 여부</Text>
 
                 <View style={styles.button}>

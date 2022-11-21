@@ -14,6 +14,12 @@ import ModifyAnimal from './MyPage/ModifyAnimal';
 import AnimalList from './MyPage/AnimalList';
 import MypageModify from './MyPage/MyPageModify';
 import AddAnimal from './MyPage/AddAnimal';
+import AddFood from './MyPage/AddFood';
+import Food from './MyPage/Food';
+import Play from './MyPage/Play';
+import MyPoint from './MyPage/MyPoint';
+
+
 
 const Stack = createStackNavigator();
 
@@ -63,38 +69,69 @@ function Home({ navigation }) {
           navigation.navigate('AddAnimal');
         }}
       />
+      <Text>AddFood</Text>
+      <Button title="밥 추가 페이지"
+        onPress={() => {
+          navigation.navigate('AddFood');
+        }}
+      />
+      <Text>Food</Text>
+      <Button title="밥 체크 페이지"
+        onPress={() => {
+          navigation.navigate('Food');
+        }}
+      />
+      <Text>Play</Text>
+      <Button title="놀기 페이지"
+        onPress={() => {
+          navigation.navigate('Play');
+        }}
+      />
+      <Text>point</Text>
+      <Button title="pont 페이지"
+        onPress={() => {
+          navigation.navigate('MyPoint');
+        }}
+      />
     </ScrollView>
   )
-
 }
 
 
-// const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
+
 
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Join" component={Join} />
-        <Stack.Screen name="Kakao" component={KakaoLogin} />
-        {/* <Stack.Screen name="Map" component={GoogleMap} /> */}
-        <Stack.Screen name="MyPage" component={MyPage} />
-        <Stack.Screen name="MypageModify" component={MypageModify} />
-        <Stack.Screen name="AnimalDetail" component={AnimalDetail} />
-        <Stack.Screen name="AnimalList" component={AnimalList} />
-        <Stack.Screen name="ModifyAnimal" component={ModifyAnimal} />
-        <Stack.Screen name="AddAnimal" component={AddAnimal} />
-      </Stack.Navigator>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Join" component={Join} />
+          <Stack.Screen name="Kakao" component={KakaoLogin} />
+          {/* <Stack.Screen name="Map" component={GoogleMap} /> */}
+          <Stack.Screen name="MyPage" component={MyPage} />
+          <Stack.Screen name="MypageModify" component={MypageModify} />
+          <Stack.Screen name="AnimalDetail" component={AnimalDetail} />
+          <Stack.Screen name="AnimalList" component={AnimalList} />
+          <Stack.Screen name="ModifyAnimal" component={ModifyAnimal} />
+          <Stack.Screen name="AddAnimal" component={AddAnimal} />
+          <Stack.Screen name="AddFood" component={AddFood} />
+          <Stack.Screen name="Food" component={Food} />
+          <Stack.Screen name="Play" component={Play} />
+          <Stack.Screen name="MyPoint" component={MyPoint}/>
+        </Stack.Navigator>
+      </NavigationContainer>
 
-
-      {/* <Tab.Navigator>
-        <Tab.Screen name="카카오톡" component={HomeScreen} />
-        <Tab.Screen name="추가 정보" component={SettingsScreen} />
-        <Tab.Screen name="마이페이지" component={MyPageScreen} />
-      </Tab.Navigator> */}
-    </NavigationContainer>
+      {/* <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="카카오톡" component={Play} />
+          <Tab.Screen name="추가 정보" component={AddFood} />
+          <Tab.Screen name="마이페이지" component={MyPage} />
+        </Tab.Navigator>
+      </NavigationContainer> */}
+      </>
   );
 }
 

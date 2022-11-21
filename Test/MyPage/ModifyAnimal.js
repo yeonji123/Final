@@ -10,45 +10,68 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TextInput } from 'react-native-gesture-handler';
+import { installReactHook } from 'react-native/Libraries/Performance/Systrace';
+import { arMA } from 'date-fns/locale';
 
 const Stack = createStackNavigator();
 
 //동물 info가져오기
-export default function AnimalDetail(navigation) {
-    const [aName, setAnimalName] = React.useState(""); //애완동물 이름
-    const [aSex, setAnimalSex] = React.useState(""); //성별
-    const [aBirth, setAnimalBirth] = React.useState(""); //생일
-    const [aBreed, setAnimalBreed] = React.useState(""); //종류
-    const [aNeat, setAnimalNeat] = React.useState(false); //중성화 여부
+export default function AnimalDetail({ navigation, route }) {
+    const [aName, setAnimalName] = React.useState(route.params.info[0]); //애완동물 이름
+    const [aSex, setAnimalSex] = React.useState(route.params.info[1]); //성별
+    const [aBirth, setAnimalBirth] = React.useState(route.params.info[2]); //생일
+    const [aBreed, setAnimalBreed] = React.useState(route.params.info[3]); //종류
+    const [aNeat, setAnimalNeat] = React.useState(route.params.info[4]); //중성화 여부
 
+    const [checkbool, setCheckBool] = React.useState(false);
+    const [change, setChange] = React.useState(false);
 
     React.useEffect(() => {
+        console.log("ModifyAnimal");
         //선택한 동물의 정보 가져오려면 props사용해야함
         //아직 미완
-
-
-        // 서버에 요청
-        // 애완동물 정보 불러오기
-        /*
-        axios.post("http://192.168.2.94:5000/member/mypage", null, {
-            params : {
-                id: "user3" //sessionStorage에 있는 id값
-            }
-        })
-        .then(function (res){
-            console.log(res.data);
-
-            setAnimalName(res.data.aName);
-            setAnimalSex(res.data.aSex);
-            setAnimalBirth(res.data.abirth);
-            setAnimalBreed(res.data.abreed);
-            setAnimalNeat(res.data.aNeat);
-        })
-        .catch(function (error){
-            console.log(error)
-        })*/
+        console.log(route);
 
     }, []);
+
+    const check = () => {
+        if (aName != route.params.info[0] || aSex != route.params.info[1] || aBirth != route.params.info[2] || aBreed != route.params.info[3] || aNeat != route.params.info[4]) {
+            console.log("check")
+            setCheckBool(true);
+            insert();
+        }
+    }
+
+    const insert = () => {
+        console.log(checkbool);
+        if (checkbool) {
+            console.log("check is true")
+
+            /*
+            axios.post("http://192.168.2.94:5000/animal/modify", null, {
+                params: {
+                    aName: aName,
+                    id: "user",
+                    aBirth: aBirth,
+                    aBreed: aBreed,
+                    aNeat: aNeat,
+                    aSex: aSex,
+                }
+            })
+                .then(function (res) {
+                    console.log(res);
+                    console.log(res.data);
+                    if (res.data === route.params.info[0]){
+                        Alert.alert("수정 완료!")
+                        setChange(true);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+                */
+        }
+    }
 
 
     return (
@@ -61,14 +84,11 @@ export default function AnimalDetail(navigation) {
                             <Text style={{ fontSize: 20 }}>애완동물 이름</Text>
                         </View>
                         <View style={styles.info}>
-                            {/* <Text style={{ fontSize: 15 }}>dfdfdf{aName}</Text> 
-                                placeholder수정해줘야 함
-                            */}
                             <TextInput
-                                    style={styles.input}
-                                    onChangeText={setAnimalName}
-                                    placeholder="useless placeholder"
-                                />
+                                style={styles.input}
+                                onChangeText={setAnimalName}
+                                placeholder={aName}
+                            />
                         </View>
                     </View>
                 </View>
@@ -82,10 +102,10 @@ export default function AnimalDetail(navigation) {
                                 placeholder수정해줘야 함
                             */}
                             <TextInput
-                                    style={styles.input}
-                                    onChangeText={setAnimalSex}
-                                    placeholder="useless placeholder"
-                                />
+                                style={styles.input}
+                                onChangeText={setAnimalSex}
+                                placeholder={aSex}
+                            />
                         </View>
                     </View>
                 </View>
@@ -99,10 +119,10 @@ export default function AnimalDetail(navigation) {
                                 placeholder수정해줘야 함
                             */}
                             <TextInput
-                                    style={styles.input}
-                                    onChangeText={setAnimalBirth}
-                                    placeholder="useless placeholder"
-                                />
+                                style={styles.input}
+                                onChangeText={setAnimalBirth}
+                                placeholder={aBirth}
+                            />
                         </View>
                     </View>
                 </View>
@@ -116,10 +136,10 @@ export default function AnimalDetail(navigation) {
                                 placeholder수정해줘야 함
                             */}
                             <TextInput
-                                    style={styles.input}
-                                    onChangeText={setAnimalBreed}
-                                    placeholder="useless placeholder"
-                                />
+                                style={styles.input}
+                                onChangeText={setAnimalBreed}
+                                placeholder={aBreed}
+                            />
                         </View>
                     </View>
                 </View>
@@ -130,15 +150,21 @@ export default function AnimalDetail(navigation) {
                         </View>
                         <View style={{ flexDirection: 'row', padding: 10, width: "55%", alignItems: 'center', }}>
                             <View style={styles.section}>
-                                <Checkbox style={styles.checkbox} value={aNeat} onValueChange={setAnimalNeat}/>
+                                <Checkbox style={styles.checkbox} value={aNeat} onValueChange={setAnimalNeat} />
                                 <Text style={styles.paragraph}>중성화 여부</Text>
                             </View>
                         </View>
                     </View>
                 </View>
-                
+
                 <View>
-                    <Button title="수정" onPress={() => Alert.alert('정보 수정 완료 alert랑 정보 페이지로 전환')} />
+                    <Button title="저장" onPress={() => {
+                        //서버에 저장하는 함수 실행
+                        check()
+                        if (change) {
+                            navigation.navigate("AnimalList");
+                        }
+                    }} />
                 </View>
             </View>
         </View>
@@ -182,5 +208,8 @@ const styles = StyleSheet.create({
     section: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    input: {
+        fontSize: 20
     },
 });

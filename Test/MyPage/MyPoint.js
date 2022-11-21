@@ -4,16 +4,12 @@ import React from "react";
 import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import Checkbox from 'expo-checkbox';
 //npm install expo-checkbox
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
-
 
 //navigation사용할 때 필요
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-
 const Stack = createStackNavigator();
 
 //동물 info가져오기
@@ -21,21 +17,12 @@ export default function AnimalDetail({ navigation: { navigate } }) {
 
     const [data, setData] = React.useState();
 
-    const save = async () => {
-        try {
-            await AsyncStorage.setItem('key', 'value');
-            await AsyncStorage.setItem('info', JSON.stringify(info)); // 객체 형태 저장
-        } catch (e) {
-            // 오류 예외 처리
-        }
-    }
 
     React.useEffect(() => {
-        //선택한 애완동물의 정보를 가져오려면 props사용해야함
-        //아직 미완
-        save();
-        // 서버에 요청
-        // 애완동물 목록 불러오기
+
+
+        //포인트 내역 확인하기
+        /*
         axios.post("http://192.168.2.94:5000/animal/list", null, {
             params: {
                 id: "user" //sessionStorage에 있는 id값
@@ -50,21 +37,75 @@ export default function AnimalDetail({ navigation: { navigate } }) {
             .catch(function (error) {
                 console.log(error)
             })
-
+*/
 
     }, []);
 
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}> 애완동물 목록 </Text>
+            <Text style={styles.title}> 포인트 </Text>
             <View style={styles.title}>
-                {/* map형식으로 계속 부름 */}
+                <View style={{ padding: 10, backgroundColor: "red" }}>
+                    <View style={{ flexDirection: 'row', width: '100%' }}>
+                        <View style={{
+                            backgroundColor: "white",
+                            padding: 10,
+                            alignItems: 'center',
+                            width: "30%"
+                        }}>
+                            <Text style={{ fontSize: 10 }}>내 전체 포인트</Text>
+                        </View>
+                    </View>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
+                        <View style={{
+                            backgroundColor: "white",
+                            padding: 10,
+                            alignItems: 'center',
+                            width: "60%"
+                        }}>
+                            <Text style={{ fontSize: 40 }}>포인트</Text>
+                        </View>
+                    </View>
+                </View>
+
+
+                <View style={{ padding: 10, backgroundColor: "blue" }}>
+                    {/* map 돌리기 */}
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
+                        <View style={{
+                            backgroundColor: "white",
+                            padding: 10,
+                            alignItems: 'center',
+                            width: "15%"
+                        }}>
+                            <Text style={{ fontSize: 20 }}>N</Text> 
+                        </View>
+                        <View style={{
+                            backgroundColor: "yellow",
+                            padding: 10,
+                            alignItems: 'center',
+                            width: "50%"
+                        }}>
+                            <Text style={{ fontSize: 20 }}>포인트</Text>
+                        </View>
+                        <View style={{
+                            backgroundColor: "lightgreen",
+                            padding: 10,
+                            alignItems: 'center',
+                            width: "35%"
+                        }}>
+                            <Button title="기록" />
+                        </View>
+                    </View>
+                </View>
+
+                {/* map형식으로 계속 부름 
                 {
                     data && data.map((e,idx)=>{
                         return (
                         <Pressable onPress={() => {
-                            navigate("AnimalDetail",{
+                            navigate("AnimalDetail", {
                                 info: [ e.aname, e.asex, e.abirth, e.abreed, e.aneut, ],
                                 title: e.aName,
                             })
@@ -87,8 +128,8 @@ export default function AnimalDetail({ navigation: { navigate } }) {
                             </View>
                         </Pressable>);
                     })
-                }
-                
+                }*/}
+
 
                 <View>
                     <Button title="추가" onPress={() => {
@@ -127,14 +168,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: "30%",
     },
-    infoNum : {
-        backgroundColor:"white",
-        padding : 10,
-        alignItems : 'center',
-        width : "20%"
+    infoNum: {
+        backgroundColor: "white",
+        padding: 10,
+        alignItems: 'center',
+        width: "20%"
     },
     info: {
-        backgroundColor:"blue", 
+        backgroundColor: "blue",
         padding: 10,
         width: "50%",
         alignItems: 'center',

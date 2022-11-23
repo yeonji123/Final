@@ -20,7 +20,6 @@ import Play from './MyPage/Play';
 import MyPoint from './MyPage/MyPoint';
 
 
-
 const Stack = createStackNavigator();
 
 function Home({ navigation }) {
@@ -106,11 +105,11 @@ export default function App() {
   return (
     <>
       <NavigationContainer>
+
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Join" component={Join} />
           <Stack.Screen name="Kakao" component={KakaoLogin} />
-          {/* <Stack.Screen name="Map" component={GoogleMap} /> */}
           <Stack.Screen name="MyPage" component={MyPage} />
           <Stack.Screen name="MypageModify" component={MypageModify} />
           <Stack.Screen name="AnimalDetail" component={AnimalDetail} />

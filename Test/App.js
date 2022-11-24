@@ -5,7 +5,6 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import KakaoLogin from './login/KakaoLogin';
 
 import Join from './login/Join';
 import MyPage from './MyPage/MyPage';
@@ -18,6 +17,8 @@ import AddFood from './MyPage/AddFood';
 import Food from './MyPage/Food';
 import Play from './MyPage/Play';
 import MyPoint from './MyPage/MyPoint';
+
+import KakaoLogin from './login/KakaoLogin';
 
 
 const Stack = createStackNavigator();
@@ -92,20 +93,20 @@ function Home({ navigation }) {
           navigation.navigate('MyPoint');
         }}
       />
+      <Text>kakao</Text>
+      <Button title="kakao 페이지"
+        onPress={() => {
+          navigation.navigate('Kakao');
+        }}
+      />
     </ScrollView>
   )
 }
 
 
-const Tab = createBottomTabNavigator();
-
-
-
 export default function App() {
   return (
-    <>
-      <NavigationContainer>
-
+       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Join" component={Join} />
@@ -123,14 +124,6 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
 
-      {/* <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="카카오톡" component={Play} />
-          <Tab.Screen name="추가 정보" component={AddFood} />
-          <Tab.Screen name="마이페이지" component={MyPage} />
-        </Tab.Navigator>
-      </NavigationContainer> */}
-      </>
   );
 }
 

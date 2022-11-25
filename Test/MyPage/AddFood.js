@@ -78,26 +78,7 @@ export default function AddFood(navigation) {
     const autoHyphen = (target) => {
         return target.replace(/[^0-9]/g, '').replace(/^(\d{2})(\d{2})$/g, "$1:$2").replace(/(\:{1})$/g, "");
     }
-    const getData = async () => {
-        try {
-            // 'tasks'항목에 저장된 자료 
-            const loadedData = await AsyncStorage.getItem('tasks');
-            // 자료가 없을 때 에러가 뜨지 않도록 빈객체를 반환하도록 한다
-            setTasks(JSON.parse(loadedData) || "{}");
-        } catch (e) {
-            // error reading value
-        }
-    }
     
-    const storeData = async tasks => {
-        try {
-            // 'tasks' 라는 항목에 tasks 저장
-            await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-        } catch (e) {
-            // saving error
-        }
-    }
-
 
     return (
         <View style={styles.container}>
@@ -121,17 +102,9 @@ export default function AddFood(navigation) {
                             <View style={styles.infoName}>
                                 <Text style={{ fontSize: 20 }}>시간</Text>
                             </View>
-                            <View style={styles.section}>
-                                <Checkbox style={styles.checkbox} value={aNeat} onValueChange={setAnimalNeat} />
-                            </View>
                         </View>
                     </View>
                 </View>
-                {/* 추가하고 저장한 내용 */}
-                {insertTag}
-
-
-
 
                 {/* 추가버튼을 누르면 나오는 태그 */}
                 {valueTag}
@@ -145,10 +118,6 @@ export default function AddFood(navigation) {
                         <View style={{ padding: 10, flexDirection: 'row', width: '100%', }}>
                             <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%', backgroundColor: "white" }}>
                                 <View style={styles.num}>
-                                    {/*맵 인덱스 
-                                       맵 인덱스 + 저장된 값
-                                    */}
-
                                     <Text style={{ fontSize: 20 }}>d</Text>
                                 </View>
                                 <View style={styles.infoName}>

@@ -18,6 +18,7 @@ import Food from './MyPage/Food';
 import Play from './MyPage/Play';
 import MyPoint from './MyPage/MyPoint';
 
+// import GoogleMap from './Components/GoogleMap';
 import KakaoLogin from './login/KakaoLogin';
 
 
@@ -99,6 +100,12 @@ function Home({ navigation }) {
           navigation.navigate('Kakao');
         }}
       />
+      {/* <Text>google map</Text>
+      <Button title="google map 페이지"
+        onPress={() => {
+          navigation.navigate('GoogleMap');
+        }}
+      /> */}
     </ScrollView>
   )
 }
@@ -121,6 +128,7 @@ export default function App() {
           <Stack.Screen name="Food" component={Food} />
           <Stack.Screen name="Play" component={Play} />
           <Stack.Screen name="MyPoint" component={MyPoint}/>
+          {/* <Stack.Screen name="GoogleMap" component={GoogleMap}/> */}
         </Stack.Navigator>
       </NavigationContainer>
 

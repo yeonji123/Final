@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Text, View, StyleSheet, Button, Alert } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert, Image } from 'react-native';
 import Checkbox from 'expo-checkbox';
 //npm install expo-checkbox
 
@@ -9,7 +9,6 @@ import Checkbox from 'expo-checkbox';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SYSTEM_BRIGHTNESS } from 'expo-permissions';
 const Stack = createStackNavigator();
 
 //동물 info가져오기
@@ -19,7 +18,7 @@ export default function AnimalDetail({  navigation  , route}) {
     const [aBirth, setAnimalBirth] = React.useState(route.params.info[2]); //생일
     const [aBreed, setAnimalBreed] = React.useState(route.params.info[3]); //종류
     const [aNeat, setAnimalNeat] = React.useState(route.params.info[4]); //중성화 여부
-
+    const [aphoto, setImg] = React.useState(route.params.info[5]); // 이미지
 
     React.useEffect(() => {
         console.log("animal")
@@ -43,6 +42,18 @@ export default function AnimalDetail({  navigation  , route}) {
         <View style={styles.container}>
             <Text style={styles.title}> 애완동물 정보 </Text>
             <View style={styles.title}>
+                <View style={{ padding: 10, }}>
+                    <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
+                        <View style={{padding: 10, width: "50%", alignItems: 'center',}}>
+                            <View style={{ width: '50%', backgroundColor: 'yellow', alignItems: 'center', }}>
+                                <Image style={{ resizeMode: "cover", width: 100, height: 100, borderRadius: 50, borderWidth: 3 }} source={{ uri: aphoto }} />
+                            </View>
+                        </View>
+                        <View style={{padding: 10, alignItems: 'center', width: "50%", justifyContent:'center'}}>
+                            <Text style={{ fontSize: 15 }}>* 사진은 수정하지 못합니다</Text>
+                        </View>
+                    </View>
+                </View>
                 <View style={{ padding: 10, }}>
                     <View style={{ borderBottomWidth: 1, flexDirection: 'row', width: '100%' }}>
                         <View style={styles.infoName}>
@@ -102,7 +113,7 @@ export default function AnimalDetail({  navigation  , route}) {
                         console.log(aName)
                         // HomeScreen()
                         navigation.navigate("ModifyAnimal",{
-                            info: [ aName, aSex, aBirth, aBreed, aNeat ],
+                            info: [ aName, aSex, aBirth, aBreed, aNeat, aphoto ],
                             title: "title",
                         })
                     }} />

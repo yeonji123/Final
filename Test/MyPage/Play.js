@@ -7,7 +7,6 @@ export default function Play(navigat) {
     const [camera, setCamera] = useState(null);
     const [image, setImage] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
-    
     useEffect(() => {
         (async () => {
             const cameraStatus = await Camera.requestPermissionsAsync();

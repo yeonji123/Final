@@ -1,121 +1,92 @@
-import Styled from 'styled-components/native';
-import MapView, {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import React, { Component, useEffect, useState } from "react";
-import * as Location from "expo-location";
-import { StyleSheet, Text, View } from 'react-native';
-import { set } from 'react-native-reanimated';
-import { render } from 'react-dom';
+import React, { useEffect, useState } from 'react';
+import MapView, { Marker, Circle, Callout } from 'react-native-maps';
+import { View, StyleSheet, Text, Dimensions, Button } from 'react-native';
+import * as Location from 'expo-location';
 
-import {fromJS} from 'immutable';
-import styles from './styles';
-
-
-const Container = Styled.View`
-    flex: 1;
-`;
-
-const URL='https://maps.google.com/maps/api/geocode/json?latlng=';
-
-export default class GoogleMap extends Component {
-    state = {
-        data : fromJS({
-            address:'loading...'
-        })
-    }
-
-    componentDidMount(){
-        const setPosition = pos =>{
-            this.data=this.data.merge(pos.coords);
-
-            const{
-                coords:{latitude,longitude}
-            } = pos;
-        
-            fetch(`${URL}${atotide},${longitude}`)
-                .then(resp => resp.json(), e => console.error(e))
-                .then(({ results: [{ formatted_address }] }) => {
-                    this.data = this.data.set('address', formatted_address);
-                });
-
-        }
-
-
-        navigator.geolocation.getCurrentPosition(setPosition);
-
-        this.watcher - navigator.geolocation.watchPosition(
-            setPosition,
-            err => console.error(err),
-            { enableHighAccuracy: true }
-        );
-
-    }
-
-    componenWillUnmout(){
-        navigator.geolocation.clearWatch(this.watcher);
-    }
-
-    render() {
-        const state = [...this.data.sortBy((v,k) => k).entries()];
-
-        return (
-            <View style={StyleSheet.container}>
-                {state.map(([k,v]) => (
-                    <Text key={k} style={ styles.label}>
-                        {`${k[0].toUpperCase()}${k.slice(1)}`}:{v}
-                    </Text>
-
-                ))}
-
-            </View>
-        );
-    }
-
-
-
-    /*
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
-
-    const getWeather = async () => {
-        console.log("getWhether")
-        const {
-            coords: { latitude, longitude },
-        } = await Location.getCurrentPositionAsync({ accuracy: 5 });
-        const location = await Location.reverseGeocodeAsync(
-            { latitude, longitude },
-            { useGoogleMaps: false }
-        );
-
-        setLatitude(latitude);
-        setLongitude(longitude);
-
-        console.log(location);
-        console.log(latitude);
-        console.log(longitude);
-
-    }
+const App = () => {
+  const [mapRegion, setmapRegion] = useState({ //나의 위치 usestate
+    latitude: 36.7987869, //위도
+    longitude: 127.0757584, //경도
+    // latitudeDelta: 0.0922, //확대되는 범위
+    // longitudeDelta: 0.0421, //확대되는 범위
+  });
 
     useEffect(() => {
-        console.log("dddddddddddddd");
-        getWeather();
-    }, []);
+    (async () => {
+      
+      //위치 수집 허용하는지 물어보기
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      let address = await Location.reverseGeocodeAsync(location.coords);
+      console.log(location);
+      console.log(address);
+      setmapRegion({ //현재 위치
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      })
+    })();
+  }, []);
 
 
-    return (
-        <Container>
-            <Text>dfdddfdfdfdfdfdfdddddddddddddddddfdfdfdfdfdfddffdf</Text>
-            <MapView style={{ flex: 1 }} provider={PROVIDER_GOOGLE}  initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.3,
-                longitudeDelta: 0.3,
-            }} />
-            <Marker
-                coordinate={{ latitude: latitude, longitude: longitude }}
-                title="this is a marker"
-                description="this is a marker example"
-            />
-        </Container>
-    );*/
-}
-//export default GoogleMap;
+  return (
+    <View style={styles.container}>
+      <MapView
+        style={{ alignSelf: 'stretch', height: '100%' }}
+        // region={mapRegion}
+        // initialRegion={{mapRegion}}
+        initialRegion={{
+            latitude: 36.7987869,
+            longitude: 127.0757584,
+            latitudeDelta: 0.0005,
+            longitudeDelta: 0.0005,
+        }}
+
+        //사용자 위치에 맞게 마커가 표시된다.
+        showsUserLocation = {true}
+        // userLocationUpdateInterval = 
+        onUserLocationChange = {(e) => {
+            console.log("onUserLocationChange", e.nativeEvent.coordinate);
+            setmapRegion({
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude
+              });
+        }}
+      >
+        <Marker
+          coordinate={mapRegion}
+          draggable={true} //마커 드래그 가능
+          onDragStart={(e)=>{console.log("Drag start", e.nativeEvent.coordinate);}} //드래그 한 위도, 경도 나타냄
+          onDragEnd={(e)=>{setmapRegion({
+            latitude: e.nativeEvent.coordinate.latitude,
+            longitude: e.nativeEvent.coordinate.longitude
+          });}} //드래그 한 곳으로 마커 이동
+        >
+        <Callout>
+          <Text>This is Callout</Text>
+        </Callout>
+        </Marker>
+        <Circle center={mapRegion} radius={100}/>
+      </MapView>
+    </View>
+  );
+};
+//{latitudeDelta: 0.0922, longitudeDelta: 0.0421}
+export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+});

@@ -3,6 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import React from "react";
 import { Text, View, StyleSheet, Button, Alert, Image } from 'react-native';
 import Constants from 'expo-constants';
+// import Coin from '../assets/images/coin.png';
+
 
 //navigation사용할 때 필요
 import 'react-native-gesture-handler';
@@ -78,7 +80,7 @@ export default function MyPage({navigation}) {
                             <View style={{ flexDirection: 'row', height: '75%', }}>
                                 <View style={{ width: '30%', height: '100%', backgroundColor: 'red', }}>
                                     <View style={{ alignItems: 'center'}}>
-                                        <Image source={require('../../assets/images/coin.png')} style={{width:'100%',height:'100%'}} />
+                                        {/* <Image source={require('../assets/images/coin.png')} style={{width:'100%',height:'100%'}} /> */}
                                     </View>
                                 </View>
                                 <View style={{ width: '70%', height: '100%', backgroundColor: 'yellow' }}>
@@ -89,7 +91,7 @@ export default function MyPage({navigation}) {
                         <View style={{ backgroundColor: 'red', width: '35%', padding: 10 }}>
                             {/* 프로필 */}
                             <View style={{ alignItems: 'center'}}>
-                                <Image source={require('../../assets/images/coin.png')} style={{ width: '100%', height: '100%' }} />
+                                {/* <Image source={Coin} style={{ width: '100%', height: '100%' }} /> */}
                             </View>
                         </View>
                     </View>

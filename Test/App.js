@@ -17,6 +17,9 @@ import AddFood from './MyPage/AddFood';
 import Food from './MyPage/Food';
 import Play from './MyPage/Play';
 import MyPoint from './MyPage/MyPoint';
+import Walk from './Walk/Walk';
+import WalkTogether from './Walk/WalkTogether';
+
 
 // import GoogleMap from './Components/GoogleMap';
 import KakaoLogin from './login/KakaoLogin';
@@ -100,6 +103,18 @@ function Home({ navigation }) {
           navigation.navigate('Kakao');
         }}
       />
+      <Text>Walk</Text>
+      <Button title="Walk 페이지"
+        onPress={() => {
+          navigation.navigate('Walk');
+        }}
+      />
+      <Text>WalkTogether</Text>
+      <Button title="WalkTogether 페이지"
+        onPress={() => {
+          navigation.navigate('WalkTogether');
+        }}
+      />
       {/* <Text>google map</Text>
       <Button title="google map 페이지"
         onPress={() => {
@@ -122,13 +137,15 @@ export default function App() {
           <Stack.Screen name="MypageModify" component={MypageModify} />
           <Stack.Screen name="AnimalDetail" component={AnimalDetail} />
           <Stack.Screen name="AnimalList" component={AnimalList} />
-          <Stack.Screen name="ModifyAnimal" component={ModifyAnimal} />
+          {/* <Stack.Screen name="ModifyAnimal" component={ModifyAnimal} /> */}
           <Stack.Screen name="AddAnimal" component={AddAnimal} />
           <Stack.Screen name="AddFood" component={AddFood} />
           <Stack.Screen name="Food" component={Food} />
           <Stack.Screen name="Play" component={Play} />
           <Stack.Screen name="MyPoint" component={MyPoint}/>
           {/* <Stack.Screen name="GoogleMap" component={GoogleMap}/> */}
+          <Stack.Screen name="Walk" component={Walk}/>
+          <Stack.Screen name="WalkTogether" component={WalkTogether}/>
         </Stack.Navigator>
       </NavigationContainer>
 

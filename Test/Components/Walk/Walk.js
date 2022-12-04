@@ -11,6 +11,9 @@ import { Camera, Constants } from 'expo-camera';
 //이미지 업로드
 import * as ImagePicker from 'expo-image-picker';
 
+//로딩
+import LottieView from 'lottie-react-native';
+
 //navigation사용할 때 필요
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,17 +24,12 @@ const Stack = createStackNavigator();
 
 
 
-export default function Walk(navigation) {
-  const [mapRegion, setmapRegion] = useState({
-    //나의 위치 usestate
-    // latitude: 36.79877477990938, //위도
-    // longitude: 127.07570265152903, //경도
-    // latitudeDelta: 0.005, //확대되는 범위
-    // longitudeDelta: 0.005, //확대되는 범위
-  });
+export default function Walk({navigation}) {
+  const [mapRegion, setmapRegion] = React.useState("");
   //이동경로 표시하기
   const [gps, setGps] = React.useState([]);
-
+  const [lat, setLatit] = React.useState();
+  const [long, setLongit] = React.useState();
   //모달
   const [modalVisible, setModalVisible] = React.useState(false); //산책 전 안내사항
   const [photoModal, setPhotoModal] = React.useState(false); //사진찍는 모달
@@ -65,11 +63,11 @@ export default function Walk(navigation) {
       console.log('location', location);
       //console.log(address);
 
-      setmapRegion({ //현재 위치
+      setmapRegion({ // 현재 위치
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.005, //확대되는 범위
-        longitudeDelta: 0.005, //확대되는 범위
+        latitudeDelta: 0.005, // 확대되는 범위
+        longitudeDelta: 0.005, // 확대되는 범위
       })
     })();
 
@@ -78,14 +76,14 @@ export default function Walk(navigation) {
     const day = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
     console.log('useeffect walk check')
     //산책 중인지 아닌지 확인
-    axios.post("http://192.168.123.142:5000/calendar/check", null, {
+    axios.post("http://192.168.2.94:5000/calendar/check", null, {
       params: {
         id: "user", //로그인한 사용자
         cDate: day,
       }
     })
       .then(function (res) {
-        console.log(res.data)
+        console.log('check',res.data)
         if (res.data === true) { //산책 시작 가능
           setStart(true)
         } else {
@@ -102,21 +100,18 @@ export default function Walk(navigation) {
     const date = new Date();
     const day = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
     const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-
+    
     console.log('walk start')
-    axios.post("http://192.168.123.142:5000/calendar/start", null, {
+    axios.post("http://192.168.2.94:5000/calendar/start", null, {
       params: {
         id: "user", //로그인한 사용자
         cStartTime: time, //시작시간
-        cWalkDate: day,
+        cDate: day,
         cType: 'walk'
       }
     })
       .then(function (res) {
-        console.log(res.data)
-        if (res.data === true) {
-          setModalVisible(true)
-        }
+        console.log('start',res.data)
       })
 
   }
@@ -203,8 +198,7 @@ export default function Walk(navigation) {
     const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 
     // axios.post("http://192.168.2.94:5000/calendar/end", null, {
-    axios.post("http://192.168.123.142:5000/calendar/end", null, {
-
+    axios.post("http://192.168.2.94:5000/calendar/end", null, {
       params: {
         id: "user",
         cEndTime: time,
@@ -245,7 +239,7 @@ export default function Walk(navigation) {
                 </View>
               </View>
               <View>
-                <Text>앱을 닫으면 위치정보를 가져올 수 없습니다</Text>
+                <Text>앱을 닫으면 위치정보를 가져올 수 없습니다 ????</Text>
                 <Text>산책을 건당 10Point입니다! 하루에 최대 50Point까지 적립 가능합니다</Text>
                 <Text>산책을 끝낼 때는 사진을 찍어야지 Point적립이 가능합니다!</Text>
                 <Text>사진은 갤러리에서 가져올 수 없으며 카메라를 허용해줘야지 인증할 수 있습니다</Text>
@@ -388,6 +382,8 @@ export default function Walk(navigation) {
 
 
 
+{
+  mapRegion != "" ? 
 
       <View style={styles.map}>
        
@@ -401,20 +397,18 @@ export default function Walk(navigation) {
           // userLocationUpdateInterval =
           onUserLocationChange={(e) => {
             //사용자가 이동하면 위치를 저장함
-            console.log("onUserLocationChange", e.nativeEvent.coordinate);
+            //console.log("onUserLocationChange", e.nativeEvent.coordinate);
             //위치 위도경도를 저장함
 
-            // 너무 새새하게 나와서 자름!
-            // 소숫점 4자리까지만 나오게 저장하게 함
-            const lat = e.nativeEvent.coordinate.latitude.toFixed(4)
-            const long = e.nativeEvent.coordinate.longitude.toFixed(4)
 
             const newCoordinate = {
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude
             }
+            setLatit(e.nativeEvent.coordinate.latitude)
+            setLongit(e.nativeEvent.coordinate.longitude)
             setGps(gps.concat(newCoordinate));
-            console.log("gps", gps);
+            //console.log("gps", gps);
 
             setmapRegion(newCoordinate)
             // setmapRegion(gps.concat(newCoordinate));
@@ -466,6 +460,7 @@ export default function Walk(navigation) {
               width: '30%'
             }} onPress={stopWalk} >
               <Text>stop</Text>
+
             </Pressable>
               <Text>              </Text>
               <Pressable style={{
@@ -477,7 +472,10 @@ export default function Walk(navigation) {
                 elevation: 3,
                 backgroundColor: '#3AB5A9',
                 width: '30%'
-              }} >
+              }} onPress={() => navigation.navigate("WalkTogether", {
+                info: [ lat, long ],
+                title: "title",
+              })}>
                 <Text>togher</Text>
               </Pressable></>
           }
@@ -485,6 +483,12 @@ export default function Walk(navigation) {
 
         </View>
       </View>
+      : <LottieView
+      source={require('../../assets/dog.json') /** 움직이는 LottieView */
+      }
+      autoPlay loop
+    />  
+    }
     </View>
   );
 };

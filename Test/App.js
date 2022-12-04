@@ -115,12 +115,12 @@ function Home({ navigation }) {
           navigation.navigate('WalkTogether');
         }}
       />
-      {/* <Text>google map</Text>
-      <Button title="google map 페이지"
+      <Text>socket</Text>
+      <Button title="socket"
         onPress={() => {
-          navigation.navigate('GoogleMap');
+          navigation.navigate('socket');
         }}
-      /> */}
+      />
     </ScrollView>
   )
 }

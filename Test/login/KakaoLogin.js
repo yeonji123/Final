@@ -8,12 +8,12 @@ import { useState } from 'react';
 // other import settings...
 const runFirst = `window.ReactNativeWebView.postMessage("this is message from web");`;
 
-const KakaoLogin = () => {
+const KakaoLogin = ({navigation}) => {
     const [val, setVal] =useState();
     const [userdata, setuserData] = useState();
     
     const id = "74dcd7c8555b0f1c9d94f04c363cdbed";
-    const redirect ="http://192.168.2.77:5000/oauth/callback/kakao";
+    const redirect ="http://192.168.2.94:5000";
 
     function LogInProgress(data) {
         console.log("loginProgress");
@@ -45,14 +45,31 @@ const KakaoLogin = () => {
                 grant_type: 'authorization_code',
                 client_id: id,
                 redirect_uri: redirect,
-                client_secret:'ksULm1tC9UM6eApY8BcO3yfrNk5eChYE',
+                client_secret:'GPRmgKG1aipbEtHeENEQSiY4b76XR22A', //있어도 되고 없어도 됨
                 code: request_code,
             },
         }).then(function (response) {
-            returnValue = response.data.access_token;
-            console.log(response.data);
-            setuserData(response.data);
-            setVal(returnValue);
+            console.log(response.data); //값 모두 출력
+            console.log(response.data.access_token); //토큰 출력
+            returnValue = response.data.access_token; //변수에 저장
+            console.log("Bearer "+ response.data.access_token)   // 헤더에 넣을 내용 잘나오는지 확인
+            
+            const request = "https://kapi.kakao.com/v2/user/me" //사용자의 정보가져올 때 쓰는 링크?
+            
+            axios({
+                method:"post", //post방식으로
+                url : request, // 위 링크를 요청함
+                headers:{
+                    "Authorization": "Bearer "+response.data.access_token //토큰을 넣음
+                },
+            }).then(function(response){
+                console.log(response) // 받은 데이터를 모두 출력
+                console.log(response.data.kakao_account.email)
+                navigation.navigate("Join",{
+                    info:[response.data.kakao_account.email, response.data.kakao_account.nickname]
+                }) // 회원가입 페이지로 이동
+            })
+
         }).catch(function (error) {
             console.log('error', error);
         });
@@ -63,16 +80,15 @@ const KakaoLogin = () => {
 
     return (
         <View style={{flex:1 }}>
-            <Text>      {val},,,,{userdata}                                                                             </Text>
             <WebView
                 originWhitelist={['*']}
                 scalesPageToFit={false}
                 style={{ marginTop: 30 }}
-                source={{ uri: 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+id+'&redirect_uri='+redirect }}
+                source={{ uri: 'https://kauth.kakao.com/oauth/authorize?client_id='+id+'&redirect_uri='+redirect+'&response_type=code'}}
                 injectedJavaScript={runFirst}
                 javaScriptEnabled={true}
                 onMessage={(event) => { 
-                    console.log(event.nativeEvent);
+                    console.log('event',event.nativeEvent);
                     LogInProgress(event.nativeEvent['url'])}}
             // onMessage ... :: webview에서 온 데이터를 event handler로 잡아서 logInProgress로 전달
             />

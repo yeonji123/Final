@@ -11,13 +11,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { RotateInDownLeft } from 'react-native-reanimated';
 const Stack = createStackNavigator();
 
-export default function Join({navigation}) {
+export default function Join({navigation, route}) {
 
   //멤버의 정보
-  const [id, setId] = React.useState(""); // 아이디
+  const [id, setId] = React.useState(route.params.info[0]); // 아이디
   const [pw, setPw] = React.useState(""); // 비밀번호
   const [pwEq, setPwEq] = React.useState(""); // 비밀번호 확인
-  const [name, setName] = React.useState(""); // 이름
+  const [name, setName] = React.useState(route.params.info[1]); // 이름
   const [nickname, setNickname] = React.useState(""); //닉네임
   const [phone, setPhone] = React.useState(""); // 전화번호
   const [address, onChangeAddress] = React.useState(""); // 도로명 주소
